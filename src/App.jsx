@@ -1,11 +1,41 @@
 import React, { useState } from "react";
 import "./App.css";
 import { FaTrashAlt } from "react-icons/fa";
-import "bootstrap/dist/css/bootstrap.css";
+
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [todos, setTodos] = useState([]); // State to store the list of todos
   const [todoToDelete, setTodoToDelete] = useState(null); // State to store the index of the todo to be deleted
+
+  const notifyAdd = () => {
+    toast.success("Add Successful!", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
+
+  const notifyDelete = () => {
+    toast.error("Delete Successful!", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -18,6 +48,8 @@ function App() {
       setTodos([...todos, userInput]);
       // Clear the input field
       event.target.elements.todo.value = "";
+      // Notify success
+      notifyAdd();
     }
   };
 
@@ -26,16 +58,17 @@ function App() {
       const newArray = todos.filter((item, index) => index !== todoToDelete);
       setTodos(newArray);
       setTodoToDelete(null);
+      notifyDelete();
     }
   };
 
   return (
     <div className="container mt-5">
-      <h1 className="text-center mb-4 text-primary">Todo List</h1>
+      <h1 className="text-center mb-4 text-primary">Todo Lists</h1>
       <form onSubmit={handleSubmit}>
         <div className="input-group mb-3">
           <input
-            className="form-control border border-primary"
+            className="form-control"
             type="text"
             name="todo"
             placeholder="Enter a new task"
@@ -43,6 +76,7 @@ function App() {
           <button className="btn btn-primary" type="submit">
             Add
           </button>
+          <ToastContainer />
         </div>
       </form>
 
@@ -51,7 +85,7 @@ function App() {
           {todos.map((todo, index) => (
             <li
               key={index}
-              className="list-group-item d-flex justify-content-between align-items-center "
+              className="list-group-item d-flex justify-content-between align-items-center"
             >
               {todo}
               <button
