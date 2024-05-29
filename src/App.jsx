@@ -1,41 +1,13 @@
 import React, { useState } from "react";
 import "./App.css";
 import { FaTrashAlt } from "react-icons/fa";
-
 import { ToastContainer, toast, Bounce } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { notifyAdd } from "./components/ToastiftyComponents";
+import { notifyDelete } from "./components/ToastiftyComponents";
 
 function App() {
   const [todos, setTodos] = useState([]); // State to store the list of todos
   const [todoToDelete, setTodoToDelete] = useState(null); // State to store the index of the todo to be deleted
-
-  const notifyAdd = () => {
-    toast.success("Add Successful!", {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
-  };
-
-  const notifyDelete = () => {
-    toast.error("Delete Successful!", {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
